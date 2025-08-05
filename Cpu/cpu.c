@@ -97,6 +97,7 @@ void rr(pro p[], int n, int q) {
                 int t = (p[i].rem_bt > q) ? q : p[i].rem_bt;
                 time += t;
                 p[i].rem_bt -= t;
+		printf("P%d|",p[i].pid);
                 if (p[i].rem_bt == 0) {
                     p[i].ct = time;
                     completed++;

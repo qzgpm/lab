@@ -120,6 +120,7 @@ int main() {
     printf("Enter Previous Head Position: ");
     scanf("%d", &prev);
 
+    do{
     printf("\nDisk Scheduling Algorithms:\n1. FCFS\n2. SCAN\n3. C-SCAN\nChoose: ");
     scanf("%d", &ch);
 
@@ -129,6 +130,7 @@ int main() {
         case 3: cscan(req, n, head, size, prev); break;
         default: printf("Invalid Choice\n");
     }
+    }while(ch != 4);
 
     return 0;
 }
