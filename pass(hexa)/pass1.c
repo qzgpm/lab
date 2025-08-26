@@ -52,7 +52,7 @@ void passOne(char label[10], char opcode[10], char operand[10], char code[10], c
     }
 
     if (strcmp(opcode, "START") == 0) {
-        start = (int)strtol(operand, NULL, 16);   
+        start = (int)strtol(operand, NULL, 16);
         locctr = start;
         fprintf(fp4, "\t%s\t%s\t%s\n", label, opcode, operand);
         fscanf(fp1, "%s\t%s\t%s", label, opcode, operand);
@@ -87,7 +87,7 @@ void passOne(char label[10], char opcode[10], char operand[10], char code[10], c
             }
             else if (strcmp(opcode, "BYTE") == 0) {
                 if (operand[0] == 'C')
-                    locctr += (int)strlen(operand) - 3; 
+                    locctr += (int)strlen(operand) - 3;
                 else if (operand[0] == 'X')
                     locctr += ((int)strlen(operand) - 3) / 2;
                 else
@@ -112,7 +112,7 @@ void passOne(char label[10], char opcode[10], char operand[10], char code[10], c
     display();
 
     length = locctr - start;
-    fprintf(fp5, "%X\n", length);   
+    fprintf(fp5, "%X\n", length);
     fclose(fp5);
 
     printf("\nThe length of the code : %d (decimal) = %X (hex)\n", length, length);

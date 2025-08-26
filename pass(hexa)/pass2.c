@@ -10,11 +10,11 @@ void passTwo() {
 
     int loc, startAddr = 0, progLen = 0;
 
-    fp1 = fopen("intermediate.txt", "r");  
-    fp2 = fopen("optab.txt", "r");         
-    fp3 = fopen("symtab.txt", "r");        
-    fp4 = fopen("length.txt", "r");        
-    fp5 = fopen("output.txt", "w");        
+    fp1 = fopen("intermediate.txt", "r");
+    fp2 = fopen("optab.txt", "r");
+    fp3 = fopen("symtab.txt", "r");
+    fp4 = fopen("length.txt", "r");
+    fp5 = fopen("output.txt", "w");
 
     if (!fp1 || !fp2 || !fp3 || !fp4 || !fp5) {
         perror("Error opening files");
