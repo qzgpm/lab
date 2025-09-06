@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 typedef struct process {
-    int pid, at, bt, ct, tat, wt, prio, rem_bt;
+    int pid, at, bt, ct, tat, wt, prio, rem_bt, inQ;
 } pro;
 
 void input(pro p[], int n, int with_priority) {
@@ -89,23 +89,53 @@ void priority(pro p[], int n) {
 
 void rr(pro p[], int n, int q) {
     int time = 0, completed = 0;
+    int front = 0, rear = 0;
+    int queue[100];
+
+    for (int i = 0; i < n; i++) p[i].inQ = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (p[i].at <= time && !p[i].inQ) {
+            queue[rear++] = i;
+            p[i].inQ = 1;
+        }
+    }
+
     while (completed < n) {
-        int idle = 1;
-        for (int i = 0; i < n; i++) {
-            if (p[i].rem_bt > 0 && p[i].at <= time) {
-                idle = 0;
-                int t = (p[i].rem_bt > q) ? q : p[i].rem_bt;
-                time += t;
-                p[i].rem_bt -= t;
-		printf("P%d|",p[i].pid);
-                if (p[i].rem_bt == 0) {
-                    p[i].ct = time;
-                    completed++;
+        if (front == rear) {
+            time++;
+            for (int i = 0; i < n; i++) {
+                if (p[i].at <= time && !p[i].inQ) {
+                    queue[rear++] = i;
+                    p[i].inQ = 1;
                 }
             }
+            continue;
         }
-        if (idle) time++;
+
+        int idx = queue[front++];
+        int run = (p[idx].rem_bt > q) ? q : p[idx].rem_bt;
+
+        printf("P%d|", p[idx].pid);
+
+        time += run;
+        p[idx].rem_bt -= run;
+
+        for (int i = 0; i < n; i++) {
+            if (p[i].at <= time && !p[i].inQ && p[i].rem_bt > 0) {
+                queue[rear++] = i;
+                p[i].inQ = 1;
+            }
+        }
+
+        if (p[idx].rem_bt > 0) {
+            queue[rear++] = idx;
+        } else {
+            p[idx].ct = time;
+            completed++;
+        }
     }
+
     print_table(p, n);
 }
 
