@@ -1,0 +1,27 @@
+ASSUME CS:CODE, DS:DATA
+
+DATA SEGMENT
+    N1 DB '4'
+    N2 DB '5'
+    N3 DB ?
+DATA ENDS
+
+CODE SEGMENT
+START:
+    MOV AX, DATA
+    MOV DS, AX
+
+    MOV AL, N1
+    SUB AL, 30H
+    MOV BL, AL
+    MOV AL, N2
+    SUB AL, 30H
+    MOV CL, 4
+    ROL BL, CL
+    OR AL, BL
+    MOV N3, AL
+
+    MOV AH, 4CH
+    INT 21H
+CODE ENDS
+END START
